@@ -25,7 +25,7 @@ import Clock from "@/app/components/navbar/Clock";
 const NAV_LINKS = [
   { href: "/articles", label: "Articles" },
   { href: "/tutorial", label: "Tutorial" },
-  { href: "/projects", label: "Projects" },
+  { href: "/tips-trick", label: "Tips & Trick" },
   { href: "/about", label: "About" },
   { href: "/shortcut", label: "Shortcut" },
 ];

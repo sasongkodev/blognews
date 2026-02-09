@@ -3,6 +3,11 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Github, Twitter, Linkedin, Code, Cpu, Users, Terminal } from "lucide-react"
 
+export const metadata = {
+    title: 'About',
+    description: 'Learn about TemanKode - a tech blog and developer community focused on modern web development, tutorials, and coding resources.',
+}
+
 export default function AboutPage() {
     return (
         <div className="flex flex-col min-h-screen">
