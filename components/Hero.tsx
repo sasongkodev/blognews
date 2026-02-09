@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { LayoutTextFlip } from "@/components/ui/layout-text-flip"
 
 export default function Hero() {
     return (
@@ -19,9 +20,13 @@ export default function Hero() {
 
             {/* Content */}
             <div className="mx-auto flex min-h-[420px] max-w-6xl flex-col items-center justify-center px-4 text-center">
-                <h1 className="mb-4 text-4xl font-bold tracking-tight text-white drop-shadow-lg md:text-5xl">
-                    Teman Kode
-                </h1>
+                <div className="mb-4 flex flex-wrap items-center justify-center gap-2 text-white">
+                    <LayoutTextFlip
+                        text="Teman Kode"
+                        words={["Tutorial", "Insight", "Tips & Trick", "Tech News"]}
+                        duration={2500}
+                    />
+                </div>
 
                 <h5 className="max-w-2xl text-sm font-normal leading-relaxed text-neutral-200 drop-shadow-md md:text-base">
                     Media berbagi insight, tutorial, dan opini seputar dunia teknologi,

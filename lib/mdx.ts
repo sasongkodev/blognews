@@ -12,6 +12,9 @@ export type Article = {
         date: string
         author?: string
         image?: string
+        image_credit?: string
+        image_credit_url?: string
+        sourceLink?: string
         tags?: string[]
     }
     content: string
