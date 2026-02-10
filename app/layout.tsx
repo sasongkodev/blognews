@@ -95,6 +95,10 @@ export default function RootLayout({
           src="https://pl28686141.effectivegatecpm.com/2c/5f/17/2c5f1798efb948bd08a77bcdc8839b77.js"
           strategy="afterInteractive"
         />
+        <Script
+          src="https://pl28686169.effectivegatecpm.com/59/a4/fa/59a4fac44fd5ecece2c8daaf42fb86ab.js"
+          strategy="afterInteractive"
+        />
         <Navbar />
         {children}
         <Footer />
