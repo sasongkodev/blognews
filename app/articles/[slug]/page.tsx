@@ -7,6 +7,7 @@ import { getArticleBySlug, getAllArticles } from "@/lib/mdx"
 import { Button } from "@/components/ui/button"
 import { Metadata } from "next"
 import ShareButtons from "./ShareButtons"
+import AdsSpace from "@/components/AdsSpace"
 
 // Force dynamic rendering to ensure fresh content on each request
 export const dynamic = 'force-dynamic'
@@ -49,6 +50,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             images: article.meta.image ? [article.meta.image] : undefined,
         },
     }
+}
+
+const IN_ARTICLE_AD_URL = "https://www.effectivegatecpm.com/agm4rp3b1?key=bd19c8751f624ec024f6226a4d3bd6e2";
+
+function insertAdIntoContent(content: string): string {
+    const paragraphs = content.split('\n\n');
+    if (paragraphs.length > 2) {
+        // Insert ad after the 2nd paragraph
+        paragraphs.splice(2, 0, `<AdsSpace url="${IN_ARTICLE_AD_URL}" />`);
+    }
+    return paragraphs.join('\n\n');
 }
 
 export default async function BlogPost({ params }: Props) {
@@ -126,7 +138,10 @@ export default async function BlogPost({ params }: Props) {
                 </header>
 
                 <div className="prose prose-lg prose-invert max-w-none prose-headings:scroll-mt-20 prose-headings:font-bold prose-headings:text-white prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:text-slate-300 prose-a:text-cyan-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-white prose-code:text-cyan-300 prose-pre:bg-slate-800 prose-pre:border prose-pre:border-slate-700 prose-img:rounded-xl prose-li:text-slate-300">
-                    <MDXRemote source={article.content} />
+                    <MDXRemote
+                        source={insertAdIntoContent(article.content)}
+                        components={{ AdsSpace }}
+                    />
                 </div>
 
                 {article.meta.sourceLink && (
@@ -146,6 +161,7 @@ export default async function BlogPost({ params }: Props) {
                 )}
 
                 <ShareButtons title={article.meta.title} slug={slug} />
+                <AdsSpace />
             </article>
         </div>
     )
