@@ -91,6 +91,10 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
+        <Script
+          src="https://pl28686141.effectivegatecpm.com/2c/5f/17/2c5f1798efb948bd08a77bcdc8839b77.js"
+          strategy="afterInteractive"
+        />
         <Navbar />
         {children}
         <Footer />
