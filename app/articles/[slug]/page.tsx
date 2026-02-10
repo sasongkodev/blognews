@@ -53,13 +53,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const IN_ARTICLE_AD_URL = "https://www.effectivegatecpm.com/agm4rp3b1?key=bd19c8751f624ec024f6226a4d3bd6e2";
+const SMARTLINK_AD_URL = "https://www.effectivegatecpm.com/dve7ruq4?key=073b227d7a23cf58fd76301563f53e5c";
 
 function insertAdIntoContent(content: string): string {
     const paragraphs = content.split('\n\n');
+
+    if (paragraphs.length > 5) {
+        // Insert ad after the 5th paragraph
+        paragraphs.splice(5, 0, `<AdsSpace url="${SMARTLINK_AD_URL}" />`);
+    }
+
     if (paragraphs.length > 2) {
         // Insert ad after the 2nd paragraph
         paragraphs.splice(2, 0, `<AdsSpace url="${IN_ARTICLE_AD_URL}" />`);
     }
+
     return paragraphs.join('\n\n');
 }
 
