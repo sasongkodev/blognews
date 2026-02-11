@@ -1,6 +1,7 @@
 "use client";
 
 import { Facebook, Linkedin, MessageCircle } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface ShareButtonsProps {
     title: string;
@@ -8,7 +9,12 @@ interface ShareButtonsProps {
 }
 
 export default function ShareButtons({ title, slug }: ShareButtonsProps) {
-    const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+    const [baseUrl, setBaseUrl] = useState("");
+
+    useEffect(() => {
+        setBaseUrl(window.location.origin);
+    }, []);
+
     const articleUrl = `${baseUrl}/articles/${slug}`;
     const encodedUrl = encodeURIComponent(articleUrl);
     const encodedTitle = encodeURIComponent(title);
