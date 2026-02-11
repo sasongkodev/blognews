@@ -12,6 +12,7 @@ export default function Hero() {
                     alt="Teman Kode Banner"
                     fill
                     priority
+                    fetchPriority="high"
                     className="object-cover"
                 />
                 {/* Overlay untuk kontras teks */}
