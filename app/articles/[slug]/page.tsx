@@ -48,6 +48,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             publishedTime: article.meta.date,
             authors: article.meta.author ? [article.meta.author] : undefined,
             images: article.meta.image ? [article.meta.image] : undefined,
+            url: `https://temankode.wahyupuji.com/articles/${slug}`,
+        },
+        alternates: {
+            canonical: `https://temankode.wahyupuji.com/articles/${slug}`,
         },
     }
 }
