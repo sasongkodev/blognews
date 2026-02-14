@@ -1,11 +1,11 @@
 import Hero from "@/components/Hero";
 import ArticleList from "@/components/ArticleList";
 
-export default function Home() {
+export default async function Home({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   return (
     <main>
       <Hero />
-      <ArticleList />
+      <ArticleList searchParams={searchParams} />
     </main>
   );
 }

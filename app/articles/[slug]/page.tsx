@@ -59,25 +59,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const IN_ARTICLE_AD_URL = "https://www.effectivegatecpm.com/agm4rp3b1?key=bd19c8751f624ec024f6226a4d3bd6e2";
 const SMARTLINK_AD_URL = "https://www.effectivegatecpm.com/dve7ruq4?key=073b227d7a23cf58fd76301563f53e5c";
 
-function insertAdIntoContent(content: string): string {
-    const paragraphs = content.split('\n\n');
-
-    if (paragraphs.length > 5) {
-        // Insert ad after the 5th paragraph
-        paragraphs.splice(5, 0, `<AdsSpace url="${SMARTLINK_AD_URL}" />`);
-    }
-
-    if (paragraphs.length > 2) {
-        // Insert ad after the 2nd paragraph
-        paragraphs.splice(2, 0, `<AdsSpace url="${IN_ARTICLE_AD_URL}" />`);
-    }
-
-    return paragraphs.join('\n\n');
-}
+import { injectContent } from "@/lib/content-injector";
+import RecommendedArticles from "@/components/RecommendedArticles";
 
 export default async function BlogPost({ params }: Props) {
     const slug = (await params).slug
     const article = await getArticleBySlug(slug)
+    const allArticles = await getAllArticles()
 
     if (!article) {
         notFound()
@@ -151,7 +139,7 @@ export default async function BlogPost({ params }: Props) {
 
                 <div className="prose prose-lg prose-invert max-w-none prose-headings:scroll-mt-20 prose-headings:font-bold prose-headings:text-white prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:text-slate-300 prose-a:text-cyan-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-white prose-code:text-cyan-300 prose-pre:bg-slate-800 prose-pre:border prose-pre:border-slate-700 prose-img:rounded-xl prose-li:text-slate-300">
                     <MDXRemote
-                        source={insertAdIntoContent(article.content)}
+                        source={injectContent(article.content, allArticles, slug)}
                         components={{ AdsSpace }}
                     />
                 </div>
@@ -174,6 +162,8 @@ export default async function BlogPost({ params }: Props) {
 
                 <ShareButtons title={article.meta.title} slug={slug} />
                 <AdsSpace />
+                
+                <RecommendedArticles currentSlug={slug} tags={article.meta.tags} />
             </article>
         </div>
     )

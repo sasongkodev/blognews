@@ -11,10 +11,10 @@ const SOCIAL_LINKS = [
 ];
 
 const FOOTER_NAV = [
-    { label: "Articles", href: "/articles" },
-    { label: "Tips & Trick", href: "/tips-trick" },
+    { label: "Artikel", href: "/articles" },
+    { label: "Tips & Trik", href: "/tips-trick" },
     { label: "Tutorial", href: "/tutorial" },
-    { label: "About", href: "/about" },
+    { label: "Tentang", href: "/about" },
 ];
 
 export default function Footer() {

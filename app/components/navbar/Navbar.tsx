@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Terminal,
   Search,
@@ -23,7 +23,7 @@ import {
 import Clock from "@/app/components/navbar/Clock";
 
 const NAV_LINKS = [
-  { href: "/articles", label: "Articles" },
+  { href: "/", label: "Home" },
   { href: "/tutorial", label: "Tutorial" },
   { href: "/tips-trick", label: "Tips & Trick" },
   { href: "/about", label: "About" },
@@ -33,7 +33,9 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const router = useRouter(); // Add router
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(""); // Add search state
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,6 +44,17 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+        if (searchQuery.trim()) {
+            router.push(`/?q=${encodeURIComponent(searchQuery)}`);
+            setIsOpen(false); 
+        } else {
+             router.push('/');
+        }
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full flex flex-col shadow-md transition-all duration-300">
@@ -152,6 +165,9 @@ export default function Navbar() {
               <input
                 type="text"
                 placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearch}
                 className="pl-9 pr-4 py-1.5 text-sm bg-gray-100 border border-transparent rounded-full focus:outline-none focus:bg-white focus:ring-2 focus:ring-cyan-200 focus:border-cyan-400 transition-all w-[150px] focus:w-[220px]"
               />
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-cyan-400 transition-colors" />
