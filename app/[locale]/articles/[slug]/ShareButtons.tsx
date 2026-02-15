@@ -12,11 +12,10 @@ export default function ShareButtons({ title, slug }: ShareButtonsProps) {
     const [baseUrl, setBaseUrl] = useState("");
 
     useEffect(() => {
-        setBaseUrl(window.location.origin);
+        setBaseUrl(window.location.href);
     }, []);
 
-    const articleUrl = `${baseUrl}/articles/${slug}`;
-    const encodedUrl = encodeURIComponent(articleUrl);
+    const encodedUrl = encodeURIComponent(baseUrl);
     const encodedTitle = encodeURIComponent(title);
 
     const shareLinks = {

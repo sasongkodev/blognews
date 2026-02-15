@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { Link, useRouter, usePathname } from "@/i18n/navigation";
 import {
   Terminal,
   Search,
@@ -21,21 +20,24 @@ import {
   SheetTitle
 } from "@/components/ui/sheet";
 import Clock from "@/app/components/navbar/Clock";
-
-const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/tutorial", label: "Tutorial" },
-  { href: "/tips-trick", label: "Tips & Trick" },
-  { href: "/about", label: "About" },
-  { href: "/shortcut", label: "Shortcut" },
-];
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "@/app/components/LanguageSwitcher";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const router = useRouter(); // Add router
+  const router = useRouter(); 
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); // Add search state
+  const [searchQuery, setSearchQuery] = useState("");
+  const t = useTranslations("Navbar");
+
+  const NAV_LINKS = [
+    { href: "/", label: t('home') },
+    { href: "/tutorial", label: t('tutorial') },
+    { href: "/tips-trick", label: t('tips') },
+    { href: "/about", label: t('about') },
+    { href: "/shortcut", label: t('shortcut') },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,10 +62,10 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full flex flex-col shadow-md transition-all duration-300">
 
       <div className="bg-[#0a192f] text-white py-2 relative">
-        <div className="container mx-auto px-4 flex items-center justify-between h-8">
+        <div className="container mx-auto px-4 flex items-center justify-end h-8 gap-4">
 
           {/* Left: Clock */}
-          <div className="flex items-center">
+          <div className="flex items-center absolute left-4">
             <Clock />
           </div>
 
@@ -79,8 +81,8 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Right: Socials */}
-          <div className="hidden sm:flex items-center gap-1">
+          {/* Right: Socials & Language */}
+          <div className="hidden sm:flex items-center gap-1 z-10">
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-1.5 text-gray-400 hover:text-white transition-colors">
               <Twitter className="w-4 h-4" />
             </a>
@@ -90,41 +92,47 @@ export default function Navbar() {
             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-1.5 text-gray-400 hover:text-white transition-colors">
               <Linkedin className="w-4 h-4" />
             </a>
+             <div className="ml-2 border-l border-gray-700 pl-2">
+                <LanguageSwitcher />
+            </div>
           </div>
 
           {/* Mobile Menu Trigger (Visible on small screens) */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="sm:hidden text-white hover:bg-white/10 ml-auto z-10" aria-label="Open menu">
-                <Menu className="w-5 h-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <SheetHeader>
-                <SheetTitle className="flex items-center gap-2">
-                  <Terminal className="w-5 h-5 text-primary" />
-                  TemanKode
-                </SheetTitle>
-              </SheetHeader>
-              <div className="flex flex-col gap-2 mt-6">
-                {NAV_LINKS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className={cn(
-                      "text-lg font-medium px-4 py-3 rounded-md transition-colors font-mono",
-                      pathname === link.href
-                        ? "bg-primary/10 text-primary"
-                        : "text-muted-foreground hover:bg-muted"
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </SheetContent>
-          </Sheet>
+          <div className="flex gap-2 sm:hidden ml-auto z-10 items-center">
+             <LanguageSwitcher />
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-white hover:bg-white/10" aria-label="Open menu">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetHeader>
+                  <SheetTitle className="flex items-center gap-2">
+                    <Terminal className="w-5 h-5 text-primary" />
+                    TemanKode
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col gap-2 mt-6">
+                  {NAV_LINKS.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className={cn(
+                        "text-lg font-medium px-4 py-3 rounded-md transition-colors font-mono",
+                        pathname === link.href
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:bg-muted"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
 
@@ -164,7 +172,7 @@ export default function Navbar() {
             <div className="relative group">
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder={t('search')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleSearch}

@@ -1,7 +1,7 @@
 import { getAllArticles } from "@/lib/mdx"
 import ArticleCard from "@/components/ArticleCard"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 import { ArrowLeft } from "lucide-react"
 
 // Force dynamic rendering to ensure fresh content on each request

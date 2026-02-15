@@ -1,0 +1,35 @@
+{
+  "HomePage": {
+    "title": "TemanKode - Blog Teknologi & Komunitas Developer",
+    "description": "Belajar pengembangan web modern dengan tutorial, tips & trik, dan sumber daya koding."
+  },
+  "Navbar": {
+    "home": "Beranda",
+    "tutorial": "Tutorial",
+    "tips": "Tips & Trik",
+    "about": "Tentang",
+    "shortcut": "Secara Cepat",
+    "search": "Cari..."
+  },
+  "Footer": {
+    "about": "Blog personal seputar programming, tips & trick, dan pengalaman sebagai developer.",
+    "links": {
+      "articles": "Artikel",
+      "tips": "Tips & Trik",
+      "tutorial": "Tutorial",
+      "about": "Tentang"
+    },
+    "copyright": "Dibuat dengan ❤️ oleh Wahyu Puji"
+  },
+  "Hero": {
+    "flipWords": ["Tutorial", "Insight", "Tips & Trik", "berita Teknologi"],
+    "description": "Media berbagi insight, tutorial, dan opini seputar dunia teknologi, pemrograman, dan perkembangan digital secara ringkas dan relevan."
+  },
+  "ArticleList": {
+    "searchResults": "Hasil Pencarian: \"{query}\"",
+    "latestArticles": "Artikel Terbaru",
+    "foundArticles": "Ditemukan {count} artikel untuk pencarian Anda.",
+    "explore": "Jelajahi wawasan, tutorial, dan berita dari tim kami.",
+    "noArticles": "Tidak ada artikel yang ditemukan."
+  }
+}

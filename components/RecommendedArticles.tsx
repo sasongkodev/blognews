@@ -1,5 +1,10 @@
 import { getAllArticles, Article } from "@/lib/mdx"
 import ArticleCard from "@/components/ArticleCard"
+// ArticleCard already uses i18n Link.
+// RecommendedArticles doesn't seem to use Link directly, it uses ArticleCard.
+// Checking file content again.
+// It seems RecommendedArticles just renders ArticleCard.
+// So RecommendedArticles is fine as long as ArticleCard is fine.
 
 interface RecommendedArticlesProps {
     currentSlug: string

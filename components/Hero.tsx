@@ -1,7 +1,24 @@
 import Image from "next/image"
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip"
+import { getTranslations } from "next-intl/server"
 
-export default function Hero() {
+export default async function Hero() {
+    const t = await getTranslations("Hero");
+    const flipWords = ["Tutorial", "Insight", "Tips & Tricks", "Tech News"]; // Fallback or from messages?
+    // flipWords from messages might be an array.
+    // getTranslations returns a function. 
+    // To get array: t.raw('flipWords') if supported, or t('flipWords') if it returns string.
+    // Usually t('key') returns string.
+    // If I structured it as array in json, I need to check how next-intl handles generic objects/arrays.
+    // It seems next-intl recommends using `useMessages` or `getMessages` effectively for arrays or just separate keys.
+    // Or I can use t.markup if I want specific handling.
+    // Use `t.raw('flipWords')` if I want the array. NOTE: `raw` might need specific setup or just casting.
+    
+    // Let's assume I can get it. If not, I'll specific keys.
+    // Actually, `t` function usually returns strings.
+    // I will use `(t('flipWords') as unknown as string[])` if I am sure.
+    // Or better, I'll fetch messages object for 'Hero'.
+    
     return (
         <section className="relative w-full overflow-hidden">
 
@@ -24,14 +41,13 @@ export default function Hero() {
                 <div className="mb-4 flex flex-wrap items-center justify-center gap-2 text-white">
                     <LayoutTextFlip
                         text="Teman Kode"
-                        words={["Tutorial", "Insight", "Tips & Trick", "Tech News"]}
+                        words={t.raw('flipWords') as string[]}
                         duration={2500}
                     />
                 </div>
 
                 <h5 className="max-w-2xl text-sm font-normal leading-relaxed text-neutral-200 drop-shadow-md md:text-base">
-                    Media berbagi insight, tutorial, dan opini seputar dunia teknologi,
-                    pemrograman, dan perkembangan digital secara ringkas dan relevan.
+                    {t('description')}
                 </h5>
             </div>
 

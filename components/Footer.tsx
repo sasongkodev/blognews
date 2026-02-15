@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Github, Linkedin, Instagram, Heart, Terminal, Mail } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const SOCIAL_LINKS = [
     { icon: Github, href: "https://github.com/wahyupuji", label: "GitHub" },
@@ -10,15 +11,16 @@ const SOCIAL_LINKS = [
     { icon: Mail, href: "mailto:hello@temankode.com", label: "Email" },
 ];
 
-const FOOTER_NAV = [
-    { label: "Artikel", href: "/articles" },
-    { label: "Tips & Trik", href: "/tips-trick" },
-    { label: "Tutorial", href: "/tutorial" },
-    { label: "Tentang", href: "/about" },
-];
-
 export default function Footer() {
     const currentYear = new Date().getFullYear();
+    const t = useTranslations("Footer");
+
+    const FOOTER_NAV = [
+        { label: t('links.articles'), href: "/articles" },
+        { label: t('links.tips'), href: "/tips-trick" },
+        { label: t('links.tutorial'), href: "/tutorial" },
+        { label: t('links.about'), href: "/about" },
+    ];
 
     return (
         <footer className="border-t border-slate-800 bg-[#0f172a] py-8 md:py-12">
@@ -36,7 +38,7 @@ export default function Footer() {
                             </span>
                         </Link>
                         <p className="max-w-sm md:max-w-md text-slate-300 leading-relaxed mx-auto text-xs md:text-sm px-4">
-                            Blog personal seputar programming, tips & trick, dan pengalaman sebagai developer.
+                            {t('about')}
                         </p>
                     </div>
 
@@ -72,7 +74,7 @@ export default function Footer() {
                     {/* Copyright */}
                     <div className="mt-2 md:mt-4 pt-6 md:pt-8 w-full border-t border-slate-800/50 flex flex-col sm:flex-row items-center justify-center gap-2 text-[10px] md:text-xs text-slate-400">
                         <p className="flex items-center gap-1">
-                            © {currentYear} TemanKode • Made with <Heart className="w-3 h-3 text-red-500 fill-current" /> by Wahyu Puji
+                            © {currentYear} TemanKode • {t('copyright')} • Made with <Heart className="w-3 h-3 text-red-500 fill-current" />
                         </p>
                     </div>
                 </div>

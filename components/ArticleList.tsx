@@ -1,9 +1,11 @@
 import { getAllArticles } from "@/lib/mdx"
 import ArticleCard from "@/components/ArticleCard"
+import { getTranslations } from "next-intl/server"
 
 export default async function ArticleList({ searchParams }: { searchParams?: Promise<{ q?: string }> }) {
     const articles = await getAllArticles()
     const query = (await searchParams)?.q?.toLowerCase() || ""
+    const t = await getTranslations("ArticleList");
 
     const filteredArticles = query 
         ? articles.filter(article => 
@@ -16,12 +18,12 @@ export default async function ArticleList({ searchParams }: { searchParams?: Pro
         <section className="container mx-auto px-4 py-12">
             <div className="mb-8 flex flex-col items-center justify-center text-center">
                 <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                    {query ? `Hasil Pencarian: "${query}"` : "Artikel Terbaru"}
+                    {query ? t('searchResults', {query}) : t('latestArticles')}
                 </h2>
                 <p className="mt-2 text-muted-foreground">
                     {query 
-                        ? `Ditemukan ${filteredArticles.length} artikel untuk pencarian Anda.`
-                        : "Jelajahi wawasan, tutorial, dan berita dari tim kami."
+                        ? t('foundArticles', {count: filteredArticles.length})
+                        : t('explore')
                     }
                 </p>
             </div>
@@ -33,7 +35,7 @@ export default async function ArticleList({ searchParams }: { searchParams?: Pro
                 </div>
             ) : (
                 <div className="text-center py-12">
-                    <p className="text-xl text-gray-500">Tidak ada artikel yang ditemukan.</p>
+                    <p className="text-xl text-gray-500">{t('noArticles')}</p>
                 </div>
             )}
         </section>
