@@ -82,6 +82,7 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${firaCode.variable} antialiased`}
+        suppressHydrationWarning
       >
         <NextIntlClientProvider messages={messages}>
           <Script
@@ -114,18 +115,6 @@ export default async function RootLayout({
               style={{ display: "none", visibility: "hidden" }}
             ></iframe>
           </noscript>
-          {siteConfig.features.ads && (
-            <>
-              <Script
-                src="https://pl28686141.effectivegatecpm.com/2c/5f/17/2c5f1798efb948bd08a77bcdc8839b77.js"
-                strategy="afterInteractive"
-              />
-              <Script
-                src="https://pl28686169.effectivegatecpm.com/59/a4/fa/59a4fac44fd5ecece2c8daaf42fb86ab.js"
-                strategy="afterInteractive"
-              />
-            </>
-          )}
           <Navbar />
           {children}
           <Footer />

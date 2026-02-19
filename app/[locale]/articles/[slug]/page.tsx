@@ -7,7 +7,7 @@ import { getArticleBySlug, getAllArticles } from "@/lib/mdx"
 import { Button } from "@/components/ui/button"
 import { Metadata } from "next"
 import ShareButtons from "./ShareButtons"
-import AdsterraBanner from "@/components/AdsterraBanner"
+import ArticleContent from "@/components/ArticleContent"
 
 // Force dynamic rendering to ensure fresh content on each request
 export const dynamic = 'force-dynamic'
@@ -58,6 +58,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 import { injectContent } from "@/lib/content-injector";
 import RecommendedArticles from "@/components/RecommendedArticles";
+
+
+
 
 export default async function BlogPost({ params }: Props) {
     const slug = (await params).slug
@@ -135,10 +138,11 @@ export default async function BlogPost({ params }: Props) {
                 </header>
 
                 <div className="prose prose-lg prose-invert max-w-none prose-headings:scroll-mt-20 prose-headings:font-bold prose-headings:text-white prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:text-slate-300 prose-a:text-cyan-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-white prose-code:text-cyan-300 prose-pre:bg-slate-800 prose-pre:border prose-pre:border-slate-700 prose-img:rounded-xl prose-li:text-slate-300">
-                    <MDXRemote
-                        source={injectContent(article.content, allArticles, slug)}
-                        components={{ AdsterraBanner }}
-                    />
+                    <ArticleContent>
+                        <MDXRemote
+                            source={injectContent(article.content, allArticles, slug)}
+                        />
+                    </ArticleContent>
                 </div>
 
                 {article.meta.sourceLink && (
@@ -158,7 +162,9 @@ export default async function BlogPost({ params }: Props) {
                 )}
 
                 <ShareButtons title={article.meta.title} slug={slug} />
-                
+
+                {/* Ad space inside the article - Moved to content injector */}
+
                 <RecommendedArticles currentSlug={slug} tags={article.meta.tags} />
             </article>
         </div>
