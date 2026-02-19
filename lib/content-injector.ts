@@ -1,8 +1,5 @@
 import { Article } from "@/lib/mdx";
 
-const IN_ARTICLE_AD_URL = "https://www.effectivegatecpm.com/agm4rp3b1?key=bd19c8751f624ec024f6226a4d3bd6e2";
-const SMARTLINK_AD_URL = "https://www.effectivegatecpm.com/dve7ruq4?key=073b227d7a23cf58fd76301563f53e5c";
-
 export function injectContent(content: string, allArticles: Article[], currentSlug: string): string {
     const paragraphs = content.split('\n\n');
     const availableArticles = allArticles.filter(a => a.slug !== currentSlug);
@@ -99,7 +96,7 @@ function injectContentBottomUp(content: string, allArticles: Article[], currentS
 
     // 2. Ad at 5
     if (paragraphs.length > 5) {
-        paragraphs.splice(5, 0, `<AdsSpace url="${SMARTLINK_AD_URL}" />`);
+        paragraphs.splice(5, 0, `<AdsterraBanner />`);
     }
 
     // 3. Link at 3
@@ -113,7 +110,7 @@ function injectContentBottomUp(content: string, allArticles: Article[], currentS
 
     // 4. Ad at 2
     if (paragraphs.length > 2) {
-        paragraphs.splice(2, 0, `<AdsSpace url="${IN_ARTICLE_AD_URL}" />`);
+        paragraphs.splice(2, 0, `<AdsterraBanner />`);
     }
 
     return paragraphs.join('\n\n');
