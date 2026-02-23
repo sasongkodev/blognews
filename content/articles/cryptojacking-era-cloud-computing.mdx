@@ -1,0 +1,73 @@
+---
+title: "Cryptojacking Adalah Ancaman Siber Modern yang Menyasar Cloud dan Resource Komputasi"
+description: "Cryptojacking adalah serangan siber yang memanfaatkan CPU dan GPU korban untuk mining cryptocurrency tanpa izin. Pelajari cara kerja, dampak, deteksi, dan pencegahannya di lingkungan cloud dan perusahaan."
+keywords: "cryptojacking, apa itu cryptojacking, cryptojacking adalah, serangan cryptojacking, cryptojacking cloud, mining cryptocurrency ilegal, keamanan siber, malware mining, cryptojacking di android, perbedaan cryptojacking dan ransomware"
+
+author: "Wahyu Puji Sasongko"
+date: "2026-02-23"
+image: "/assets/Cryptojacking.jpg"
+tags: ["Cryptojacking", "Cloud Computing", "Keamanan Siber", "Malware", "Cryptocurrency"]
+
+---
+
+# Cryptojacking Adalah Ancaman Siber Modern pada Era Cloud Computing
+
+Cryptojacking adalah ancaman keamanan siber modern yang semakin relevan di era komputasi cloud dan cryptocurrency. Dalam konteks keamanan digital, cryptojacking merujuk pada praktik penyalahgunaan sumber daya komputasi seperti CPU dan GPU untuk menambang cryptocurrency tanpa izin pemilik perangkat. Berbeda dengan serangan siber yang berfokus pada pencurian data, cryptojacking mengeksploitasi daya komputasi korban demi menghasilkan keuntungan finansial bagi pelaku. Aktivitas ini sering kali tidak terdeteksi dalam waktu lama karena tidak menimbulkan gangguan langsung selain penurunan performa, perangkat cepat panas, serta konsumsi listrik yang meningkat.
+
+## Cara Kerja Cryptojacking dalam Proses Mining Cryptocurrency
+
+Secara teknis, cryptojacking memanfaatkan mekanisme penambangan cryptocurrency dalam jaringan blockchain. Proses mining melibatkan komputasi intensif untuk memvalidasi transaksi dan menyelesaikan algoritma kriptografi tertentu. Dalam skenario normal, penambang memperoleh reward berupa aset kripto sebagai kompensasi atas kontribusi daya komputasi. Namun dalam praktik cryptojacking, proses mining dijalankan di perangkat korban tanpa persetujuan, sementara hasil mining dialihkan ke dompet kripto milik penyerang. Model serangan ini menjadikan resource computing sebagai target utama, bukan data pribadi.
+
+## Jenis Cryptojacking Berbasis Browser dan Malware
+
+Berdasarkan metode infeksi, cryptojacking umumnya terbagi menjadi dua kategori utama yaitu cryptojacking berbasis browser dan cryptojacking berbasis malware.
+
+Cryptojacking berbasis browser terjadi ketika skrip mining disisipkan ke dalam website atau iklan digital. Ketika pengguna membuka halaman tersebut, browser secara otomatis menjalankan skrip yang memanfaatkan CPU perangkat. Aktivitas ini biasanya berhenti ketika tab ditutup.
+
+Sebaliknya, cryptojacking berbasis malware melibatkan instalasi perangkat lunak berbahaya secara permanen pada sistem korban. Jenis ini lebih berbahaya karena dapat berjalan terus menerus di latar belakang, bahkan setelah perangkat di restart, serta sering kali menyamar sebagai proses sistem yang sah.
+
+## Jalur Infeksi Cryptojacking di Cloud dan Perusahaan
+
+Vektor serangan cryptojacking sangat bergantung pada teknik rekayasa sosial dan eksploitasi celah keamanan. Email phishing menjadi salah satu metode distribusi paling umum, di mana korban diarahkan untuk mengklik tautan atau mengunduh lampiran berbahaya. Selain itu, website yang telah diretas dan iklan online yang terinfeksi juga sering digunakan sebagai media penyebaran skrip mining.
+
+Dalam lingkungan perusahaan dan cloud computing, pelaku sering memanfaatkan kredensial bocor, konfigurasi server yang lemah, container yang tidak aman, serta celah pada infrastruktur Kubernetes untuk menjalankan miner dalam skala besar. Serangan pada cloud environment sangat menguntungkan pelaku karena kapasitas komputasi yang tersedia jauh lebih besar dibanding perangkat individu.
+
+## Dampak Cryptojacking pada Perangkat dan Infrastruktur Cloud
+
+Dampak cryptojacking terhadap individu maupun organisasi tidak dapat dianggap remeh. Pada perangkat pribadi, gejala umum meliputi performa yang melambat, aplikasi berjalan tidak responsif, baterai cepat habis, serta peningkatan suhu perangkat secara signifikan. Dalam jangka panjang, kondisi ini dapat mempercepat kerusakan hardware.
+
+Di sisi perusahaan, cryptojacking berpotensi meningkatkan biaya operasional cloud akibat lonjakan penggunaan CPU dan GPU. Selain itu, resource yang seharusnya dialokasikan untuk aplikasi bisnis menjadi terbatas, yang pada akhirnya dapat menyebabkan gangguan layanan dan downtime.
+
+## Teknik Cryptojacking Modern yang Sulit Dideteksi
+
+Perkembangan cryptojacking modern menunjukkan tingkat sofisticasi yang semakin tinggi. Banyak malware mining menggunakan teknik throttling untuk membatasi penggunaan CPU agar tidak memicu kecurigaan. Beberapa varian mampu mendeteksi aktivitas pengguna dan menyesuaikan beban komputasi agar tetap tersembunyi. Terdapat pula teknik fileless malware yang beroperasi di memori tanpa meninggalkan jejak file di disk, sehingga lebih sulit dideteksi oleh antivirus konvensional.
+
+Obfuscation code, komunikasi terenkripsi, serta pemanfaatan layanan publik untuk menyimpan konfigurasi semakin mempersulit proses investigasi dan respons insiden.
+
+## Cara Mendeteksi Cryptojacking di Android dan Desktop
+
+Deteksi cryptojacking memerlukan pendekatan berbasis monitoring resource dan analisis anomali. Pengguna perlu memperhatikan lonjakan penggunaan CPU atau GPU yang tidak wajar, terutama saat perangkat dalam kondisi idle. Indikator lain meliputi kipas yang berputar terus menerus, sistem terasa panas, serta konsumsi baterai abnormal.
+
+Cara mendeteksi cryptojacking di Android dapat dilakukan dengan memantau penggunaan baterai dan CPU melalui menu pengaturan sistem. Aplikasi yang mengonsumsi resource secara tidak wajar perlu diinvestigasi lebih lanjut. Instalasi aplikasi hanya dari sumber resmi serta pembaruan sistem keamanan Android secara rutin merupakan langkah mitigasi yang efektif.
+
+Dalam organisasi, diperlukan baseline performa sistem agar anomali dapat diidentifikasi secara akurat. Monitoring log, analisis traffic jaringan, serta deteksi koneksi outbound ke mining pool menjadi komponen penting dalam strategi deteksi dini.
+
+## Strategi Pencegahan Cryptojacking di Lingkungan Cloud
+
+Pencegahan cryptojacking harus dilakukan secara berlapis melalui pendekatan defense in depth. Pembaruan sistem operasi dan aplikasi secara rutin membantu menutup celah keamanan yang sering dieksploitasi. Penggunaan solusi endpoint protection, firewall, dan sistem deteksi intrusi dapat mengidentifikasi pola penyalahgunaan resource.
+
+Pada level identitas, penerapan autentikasi dua faktor serta manajemen password yang kuat dapat mencegah kompromi akun. Edukasi keamanan siber bagi karyawan juga menjadi faktor krusial untuk meminimalkan risiko phishing dan social engineering.
+
+Dalam konteks perusahaan cloud, integrasi cloud security monitoring, governance policy, serta pembatasan hak akses menjadi komponen strategis untuk mencegah eksploitasi resource skala besar.
+
+## Perbedaan Cryptojacking dan Ransomware
+
+Perbedaan cryptojacking dan ransomware terletak pada tujuan dan dampaknya. Ransomware mengenkripsi data dan meminta tebusan untuk mengembalikannya, sedangkan cryptojacking memanfaatkan resource komputasi tanpa merusak atau mengunci data korban. Walaupun dampaknya terlihat lebih ringan, cryptojacking tetap merugikan secara finansial dan operasional.
+
+## Dampak Cryptojacking pada Perusahaan Cloud
+
+Dampak cryptojacking pada perusahaan cloud sangat berkaitan dengan lonjakan biaya infrastruktur dan degradasi performa layanan. Dalam skala besar, serangan ini dapat memicu pembengkakan tagihan komputasi yang signifikan serta merusak reputasi perusahaan akibat gangguan layanan. Oleh karena itu, perlindungan resource komputasi harus menjadi bagian dari strategi keamanan siber modern.
+
+## Kesimpulan
+
+Cryptojacking adalah bentuk kejahatan siber yang berfokus pada eksploitasi daya komputasi dibanding pencurian data. Di era cloud computing dan artificial intelligence, resource menjadi aset bernilai tinggi yang harus dilindungi. Dengan memahami cara kerja, jenis serangan, teknik deteksi, serta strategi mitigasinya, individu maupun organisasi dapat membangun sistem keamanan yang lebih resilien terhadap ancaman cryptojacking.

@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono, Fira_Code } from "next/font/google";
 import Script from "next/script";
 import "../globals.css";
 import Navbar from "@/app/components/navbar/Navbar";
 import Footer from "@/components/Footer";
 import { config as siteConfig } from "@/lib/config";
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import { routing } from '@/i18n/routing';
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,46 +27,59 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://temankode.wahyupuji.com'),
+  metadataBase: new URL("https://temankode.wahyupuji.com"),
   title: {
-    default: 'TemanKode',
-    template: '%s | TemanKode',
+    default: "TemanKode",
+    template: "%s | TemanKode",
   },
-  description: 'TemanKode - Blog Teknologi & Komunitas Developer. Belajar pengembangan web modern dengan tutorial, tips & trik, dan sumber daya koding.',
-  keywords: ['pemrograman', 'pengembangan web', 'tutorial', 'koding', 'developer', 'javascript', 'typescript', 'react', 'nextjs'],
-  authors: [{ name: 'TemanKode' }],
-  creator: 'TemanKode',
+  description:
+    "TemanKode - Blog Teknologi & Komunitas Developer. Belajar pengembangan web modern dengan tutorial, tips & trik, dan sumber daya koding.",
+  keywords: [
+    "pemrograman",
+    "pengembangan web",
+    "tutorial",
+    "koding",
+    "developer",
+    "javascript",
+    "typescript",
+    "react",
+    "nextjs",
+  ],
+  authors: [{ name: "TemanKode" }],
+  creator: "TemanKode",
   openGraph: {
-    type: 'website',
-    locale: 'id_ID',
-    siteName: 'TemanKode',
-    title: 'TemanKode - Blog Teknologi & Komunitas Developer',
-    description: 'Belajar pengembangan web modern dengan tutorial, tips & trik, dan sumber daya koding.',
+    type: "website",
+    locale: "id_ID",
+    siteName: "TemanKode",
+    title: "TemanKode - Blog Teknologi & Komunitas Developer",
+    description:
+      "Belajar pengembangan web modern dengan tutorial, tips & trik, dan sumber daya koding.",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'TemanKode - Tech Blog & Developer Community',
-    description: 'Learn modern web development with tutorials, tips & tricks, and coding resources.',
+    card: "summary_large_image",
+    title: "TemanKode - Tech Blog & Developer Community",
+    description:
+      "Learn modern web development with tutorials, tips & tricks, and coding resources.",
   },
   robots: {
     index: true,
     follow: true,
   },
   verification: {
-    google: 'Luy1pqvTqIwDAnsI913QUkRPrLbPSQDFIXY8C2Yg9ck',
+    google: "Luy1pqvTqIwDAnsI913QUkRPrLbPSQDFIXY8C2Yg9ck",
   },
 };
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({locale}));
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 export default async function RootLayout({
   children,
-  params
+  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{locale: string}>;
+  params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
 
@@ -118,6 +132,7 @@ export default async function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <Analytics />
         </NextIntlClientProvider>
       </body>
     </html>
