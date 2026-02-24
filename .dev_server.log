@@ -1,0 +1,31 @@
+
+> blognews@0.1.0 dev
+> next dev
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/wahyupuji/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /home/wahyupuji/Desktop/front-dev/blognews/package-lock.json
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.100.15:3000
+
+✓ Starting...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 2.4s
+○ Compiling /[locale]/tips-trick ...
+ GET /id/tips-trick 200 in 5.7s (compile: 4.7s, proxy.ts: 197ms, generate-params: 739ms, render: 817ms)
+ GET /id/articles/burnout-programmer-deadline-overwork 200 in 3.9s (compile: 2.4s, proxy.ts: 21ms, generate-params: 2.2s, render: 1530ms)
+✓ Compiled in 1124ms
+✓ Compiled in 182ms
+ GET /id/tips-trick 200 in 1498ms (compile: 881ms, proxy.ts: 22ms, generate-params: 147ms, render: 595ms)
+ GET /id/tips-trick 200 in 774ms (compile: 83ms, proxy.ts: 10ms, generate-params: 67ms, render: 680ms)
+ GET /id/tips-trick 200 in 748ms (compile: 247ms, proxy.ts: 13ms, generate-params: 65ms, render: 487ms)
+ GET /id/tips-trick 200 in 833ms (compile: 92ms, proxy.ts: 20ms, generate-params: 60ms, render: 721ms)
+ GET /id/articles/burnout-programmer-deadline-overwork 200 in 664ms (compile: 89ms, proxy.ts: 12ms, generate-params: 67ms, render: 563ms)
+ GET /en 200 in 2.2s (compile: 1064ms, proxy.ts: 19ms, generate-params: 892ms, render: 1116ms)
+ GET /en/articles/mengapa-linux-cenderung-lebih-aman-daripada-windows 200 in 408ms (compile: 65ms, proxy.ts: 13ms, generate-params: 50ms, render: 330ms)
+ GET /en 200 in 289ms (compile: 65ms, proxy.ts: 6ms, generate-params: 49ms, render: 217ms)
