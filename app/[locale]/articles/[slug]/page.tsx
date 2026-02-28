@@ -127,12 +127,13 @@ export default async function BlogPost({ params }: Props) {
 
                     <div className="flex flex-wrap gap-2">
                         {article.meta.tags?.map((tag) => (
-                            <span
+                            <Link
                                 key={tag}
-                                className="inline-flex items-center rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-400 ring-1 ring-inset ring-cyan-500/20"
+                                href={`/tags/${encodeURIComponent(tag)}`}
+                                className="inline-flex items-center rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-400 ring-1 ring-inset ring-cyan-500/20 transition-colors hover:bg-cyan-500/20 hover:text-cyan-300"
                             >
                                 {tag}
-                            </span>
+                            </Link>
                         ))}
                     </div>
                 </header>

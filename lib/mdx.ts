@@ -63,3 +63,28 @@ export const getAllArticles = async (): Promise<Article[]> => {
         return 1
     })
 }
+
+export const getAllTags = async (): Promise<{ name: string; count: number }[]> => {
+    const articles = await getAllArticles()
+    const tagMap = new Map<string, number>()
+
+    articles.forEach((article) => {
+        article.meta.tags?.forEach((tag) => {
+            const normalized = tag.trim()
+            tagMap.set(normalized, (tagMap.get(normalized) || 0) + 1)
+        })
+    })
+
+    return Array.from(tagMap.entries())
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count)
+}
+
+export const getArticlesByTag = async (tag: string): Promise<Article[]> => {
+    const articles = await getAllArticles()
+    return articles.filter((article) =>
+        article.meta.tags?.some(
+            (t) => t.toLowerCase() === tag.toLowerCase()
+        )
+    )
+}
