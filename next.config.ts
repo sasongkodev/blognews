@@ -50,20 +50,20 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              // Scripts: self + Google + Adsterra domains
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://*.highperformanceformat.com https://*.effectivegatecpm.com",
+              // Scripts: self + Google
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com",
               // Styles: self + inline + Google Fonts
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               // Fonts: self + Google Fonts
               "font-src 'self' https://fonts.gstatic.com",
               // Images: self + data URIs + all HTTPS
               "img-src 'self' data: https:",
-              // Network requests: self + Google + Adsterra
-              "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.highperformanceformat.com https://*.effectivegatecpm.com",
-              // Iframes: self + all HTTPS (common for ad networks)
-              "frame-src 'self' https:",
-              // Child frames/workers: self + all HTTPS + blob
-              "child-src 'self' https: blob:",
+              // Network requests: self + Google
+              "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com",
+              // Iframes: self only
+              "frame-src 'self'",
+              // Child frames/workers: self + blob
+              "child-src 'self' blob:",
             ].join('; ')
           }
         ],

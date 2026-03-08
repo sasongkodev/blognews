@@ -164,7 +164,7 @@ export default async function BlogPost({ params }: Props) {
 
                 <ShareButtons title={article.meta.title} slug={slug} />
 
-                {/* Ad space inside the article - Moved to content injector */}
+
 
                 <RecommendedArticles currentSlug={slug} tags={article.meta.tags} />
             </article>

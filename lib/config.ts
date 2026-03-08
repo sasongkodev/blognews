@@ -1,6 +1,6 @@
 export const config = {
     features: {
-        ads: true, 
+        ads: false, 
     },
 };
  
