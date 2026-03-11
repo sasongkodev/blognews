@@ -1,0 +1,294 @@
+
+---
+title: "5 Kesalahan Developer JavaScript yang Bisa Dihindari dengan TypeScript"
+description: "Lima kesalahan yang sering terjadi di proyek JavaScript dan bagaimana TypeScript membantu mencegahnya sejak awal."
+slug: "kesalahan-javascript-yang-bisa-dihindari-dengan-typescript"
+date: "2026-03-11"
+author: "Wahyu Puji"
+tags: ["typescript", "javascript", "tech", "web-development"]
+image: "/assets/network.jpeg"
+---
+
+Beberapa tahun terakhir, pola kerja saya di proyek JavaScript berubah. Bukan karena saya tiba-tiba jadi “lebih rapi”, tapi karena saya capek mengulang drama yang sama: bug kecil yang lolos, refactor yang bikin deg-degan, dan perubahan requirement yang efeknya merambat ke mana-mana. Di titik itu saya sadar, sering kali masalahnya bukan di logika yang rumit, tapi di hal-hal sederhana yang *tidak terjaga*.
+
+Di JavaScript, kita bisa menulis cepat. Itu enak, apalagi kalau lagi ngebut bikin fitur. Tapi semakin proyek membesar, “kebebasan” itu punya biaya. Dan di sinilah TypeScript biasanya terasa seperti sabuk pengaman. Bukan berarti kita tidak bisa kecelakaan, tapi banyak kecelakaan yang bisa dicegah sebelum mobil jalan.
+
+Artikel ini bukan ajakan fanatik. Saya cuma mau membahas **5 kesalahan yang sering dilakukan programmer JavaScript**, yang menurut pengalaman saya paling sering memakan waktu, dan bagaimana **TypeScript** membantu menghindarinya dengan cara yang cukup masuk akal.
+
+---
+
+## 1) Salah asumsi bentuk data (terutama dari API)
+
+Kalau kamu sering ambil data dari API, kamu pasti pernah nulis yang model begini:
+
+```
+
+const username = [data.user.name](http://data.user.name).toUpperCase()
+
+```
+
+Lalu suatu hari error muncul:
+
+> Cannot read properties of undefined (reading 'name')
+
+Masalahnya bukan karena kamu “tidak bisa coding”. Masalahnya karena **asumsi tentang bentuk data** sering lebih optimis daripada realitas. API berubah, field kadang null, ada edge case, atau response berbeda tergantung kondisi.
+
+Di JavaScript, semua ini baru ketahuan saat runtime. Kadang ketahuan pas QA, kadang pas user yang nemu duluan.
+
+### Bagaimana TypeScript membantu
+
+Dengan TypeScript, kamu dipaksa mendefinisikan kontrak data, minimal untuk bagian yang kamu pakai.
+
+```
+
+type ApiResponse = {
+  user?: {
+	name?: string
+  }
+}
+
+function getUpperName(data: ApiResponse) {
+  return data.user?.name?.toUpperCase() ?? "(tanpa nama)"
+}
+
+```
+
+Kuncinya bukan sekadar “pakai optional chaining”. Yang paling berasa adalah: **kamu jadi sadar di awal** kalau `user` atau `name` mungkin tidak ada.
+
+Kalau kamu sudah terbiasa, kamu juga akan mulai menulis kode yang lebih jujur: ketika datanya bisa kosong, kodenya juga mengakui itu.
+
+---
+
+## 2) “Stringly typed”: semua hal dianggap string
+
+Ini kebiasaan klasik di banyak codebase JavaScript: ID, status, role, bahkan tipe event—semuanya string. Awalnya terlihat fleksibel, tapi lama-lama jadi rapuh.
+
+Contoh sederhana:
+
+```
+
+if (status === "active") {
+
+// ...
+
+}
+
+```
+
+Tiba-tiba ada yang kirim `"Active"` atau `"activated"` atau `"ACTIVE"`. Lalu bug kecil muncul di area yang sebenarnya tidak menarik, tapi menyita waktu debugging.
+
+### Bagaimana TypeScript membantu
+
+TypeScript memberi cara yang elegan untuk bikin himpunan nilai yang valid, tanpa ribet:
+
+```
+
+type Status = "active" | "inactive" | "pending"
+
+function canLogin(status: Status) {
+
+return status === "active"
+
+}
+
+```
+
+Sekarang kalau ada yang nulis `status = "activated"`, editor langsung protes.
+
+Untuk kasus yang lebih kompleks, saya biasanya suka pakai `enum` (kadang), tapi lebih sering pakai union string karena ringan:
+
+```
+
+type Role = "admin" | "editor" | "viewer"
+
+```
+
+Hal-hal semacam ini mungkin terasa sepele, tapi di proyek yang sudah punya banyak fitur, menjaga nilai-nilai kecil tetap konsisten itu efeknya besar.
+
+---
+
+## 3) Fungsi menerima parameter “apa aja”, lalu errornya nyasar
+
+Di JavaScript, kita sering bikin fungsi yang fleksibel. Masalahnya, fleksibel kadang berarti ambigu.
+
+Misalnya ada helper:
+
+```
+
+function formatPrice(value) {
+
+return value.toFixed(2)
+
+}
+
+```
+
+Kamu kira `value` selalu number, tapi ternyata ada input string `"10000"`, atau `null`, atau `undefined`. Lalu error runtime muncul di tempat yang tidak kamu duga.
+
+Kalau kamu beruntung, error muncul di development. Kalau tidak, muncul di production saat user input tertentu terjadi.
+
+### Bagaimana TypeScript membantu
+
+TypeScript memaksa kamu memilih: parameter ini sebenarnya apa?
+
+```
+
+function formatPrice(value: number) {
+
+return value.toFixed(2)
+
+}
+
+```
+
+Kalau memang inputnya bisa lebih dari satu tipe, TypeScript juga memaksa kamu menangani cabangnya:
+
+```
+
+function formatPrice(value: number | string) {
+
+const numeric = typeof value === "string" ? Number(value) : value
+
+return numeric.toFixed(2)
+
+}
+
+```
+
+Saya suka menyebut ini efek “memaksa berpikir”. Kadang kita tidak suka dipaksa. Tapi banyak bug yang hilang justru karena kita dipaksa menuliskan asumsi secara eksplisit.
+
+---
+
+## 4) Refactor yang bikin takut karena tidak tahu dampaknya
+
+Ini salah satu alasan paling praktis kenapa banyak programmer JavaScript akhirnya “berdamai” dengan TypeScript.
+
+Di project yang sudah berjalan, refactor itu bukan sekadar mengganti nama variabel. Biasanya ada perubahan struktur data, perubahan output fungsi, atau perubahan cara komponen dipakai. Dalam JavaScript murni, kamu mengandalkan kombinasi:
+
+- pencarian teks
+- test (kalau ada)
+- feeling
+- dan doa
+
+Masalahnya: **tidak semua tempat pemakaian gampang terlihat**, apalagi kalau ada dynamic import, bentuk objek yang berubah-ubah, atau pola yang terlalu “bebas”.
+
+### Bagaimana TypeScript membantu
+
+TypeScript membuat refactor lebih “terlihat” dampaknya. Contoh gampang:
+
+```
+
+type User = {
+
+id: string
+
+name: string
+
+email: string
+
+}
+
+```
+
+Kamu ubah `email` jadi optional:
+
+```
+
+type User = {
+
+id: string
+
+name: string
+
+email?: string
+
+}
+
+```
+
+Di JavaScript, perubahan ini mungkin diam-diam jadi bug di banyak tempat. Di TypeScript, compiler akan langsung menandai bagian-bagian yang masih menganggap `email` pasti ada.
+
+Sederhananya, TypeScript itu seperti lampu penerangan saat kamu bongkar rumah. Kamu masih bisa salah pas masang, tapi kamu lebih jarang kejedot karena gelap.
+
+---
+
+## 5) Kesalahan import/ekspor dan “helper” yang diam-diam tidak sesuai kontrak
+
+Di banyak codebase JavaScript, ada banyak helper kecil: `mapResponse`, `normalizeData`, `createPayload`, `pickFields`, dan sebagainya. Dan karena helper itu sering dipakai lintas file, kesalahan kecil bisa merambat.
+
+Contoh yang sering kejadian:
+
+- sebuah helper mengembalikan object dengan field `userId`
+- file lain mengira field-nya `id`
+- atau helper mengembalikan `null` untuk kasus tertentu, tapi pemanggilnya tidak mengantisipasi
+
+Di JavaScript, semua ini bisa lolos tanpa protes.
+
+### Bagaimana TypeScript membantu
+
+TypeScript membantu dengan cara yang sederhana: helper punya tipe output yang jelas.
+
+```
+
+type NormalizedUser = {
+
+id: string
+
+name: string
+
+}
+
+function normalizeUser(input: any): NormalizedUser {
+
+return {
+
+id: String(input.user_id),
+
+name: String(input.full_name),
+
+}
+
+}
+
+```
+
+Begitu kamu punya tipe `NormalizedUser`, pemanggil fungsi akan mengikuti itu. Kalau pemanggil mencoba akses `userId`, editor langsung kasih sinyal.
+
+Saya juga sering menghindari `any` di helper seperti ini. Kalau memang terpaksa, saya batasi pemakaian `any` hanya di layer yang dekat dengan “dunia luar” (misal response API mentah). Setelah itu, saya convert ke tipe yang lebih aman.
+
+Dan ya, kadang ini terasa seperti kerja ekstra. Tapi saya sudah terlalu sering membayar “utang kebebasan” JavaScript dengan waktu debugging yang jauh lebih mahal.
+
+---
+
+## Sedikit sudut pandang praktis: TypeScript bukan buat bikin kamu lebih pintar
+
+Saya tidak pernah merasa TypeScript bikin saya “lebih jago”. Yang saya rasakan: TypeScript bikin saya **lebih cepat percaya diri** saat mengubah kode.
+
+Kalau kamu kerja sendirian di website pribadi, manfaatnya tetap ada. Justru karena kita sering tidak punya QA, tidak punya tim testing, dan biasanya ngerjain fitur malam-malam sambil mikir hal lain. TypeScript jadi semacam *guardrail*.
+
+Kalau kamu kerja tim, manfaatnya makin jelas: komunikasi lewat kode jadi lebih tegas. Bukan lewat chat panjang soal “ini paramnya bisa null nggak sih?”.
+
+---
+
+## Cara mulai tanpa bikin proyek jadi berat
+
+Buat saya, kesalahan paling umum saat “mulai TypeScript” adalah mencoba mengubah semuanya sekaligus. Akhirnya proyek jadi macet karena terlalu banyak error, lalu TypeScript disalahkan.
+
+Saya biasanya mulai dari yang paling sering bikin bug:
+
+- tipe untuk response API (atau minimal bagian yang dipakai)
+- tipe untuk state utama (misal user session, cart, dsb.)
+- helper/helper penting yang dipakai di banyak tempat
+
+Kalau kamu masih migrasi dari JavaScript, kamu juga bisa pakai strategi “bertahap”: izinkan beberapa `any` dulu, tapi taruh target untuk menguranginya pelan-pelan. Yang penting: jangan biarkan `any` jadi kebiasaan permanen.
+
+---
+
+## Penutup yang tidak sok bijak
+
+Kalau kamu sudah lama jadi programmer JavaScript, kemungkinan besar kamu sudah “kebal” dengan bug-bug kecil. Masalahnya, kebal itu bukan berarti murah. Biasanya kita cuma terbiasa bayar dengan waktu.
+
+TypeScript tidak akan menghilangkan semua bug. Tapi lima kesalahan yang saya tulis di atas adalah jenis kesalahan yang paling sering bikin saya buang waktu, dan setelah pindah ke TypeScript, frekuensinya turun drastis.
+
+Kalau kamu penasaran, coba saja di satu area kecil dulu. Biasanya setelah satu-dua refactor yang terasa lebih aman, kamu akan paham kenapa banyak developer akhirnya betah.
+```
