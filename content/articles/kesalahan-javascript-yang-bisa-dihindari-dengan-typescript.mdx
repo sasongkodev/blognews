@@ -1,4 +1,3 @@
-
 ---
 title: "5 Kesalahan Developer JavaScript yang Bisa Dihindari dengan TypeScript"
 description: "Lima kesalahan yang sering terjadi di proyek JavaScript dan bagaimana TypeScript membantu mencegahnya sejak awal."
@@ -6,7 +5,7 @@ slug: "kesalahan-javascript-yang-bisa-dihindari-dengan-typescript"
 date: "2026-03-11"
 author: "Wahyu Puji"
 tags: ["typescript", "javascript", "tech", "web-development"]
-image: "/assets/network.jpeg"
+image: "/assets/js.jpg"
 ---
 
 Beberapa tahun terakhir, pola kerja saya di proyek JavaScript berubah. Bukan karena saya tiba-tiba jadi “lebih rapi”, tapi karena saya capek mengulang drama yang sama: bug kecil yang lolos, refactor yang bikin deg-degan, dan perubahan requirement yang efeknya merambat ke mana-mana. Di titik itu saya sadar, sering kali masalahnya bukan di logika yang rumit, tapi di hal-hal sederhana yang *tidak terjaga*.
@@ -21,10 +20,8 @@ Artikel ini bukan ajakan fanatik. Saya cuma mau membahas **5 kesalahan yang seri
 
 Kalau kamu sering ambil data dari API, kamu pasti pernah nulis yang model begini:
 
-```
-
-const username = [data.user.name](http://data.user.name).toUpperCase()
-
+```js
+const username = data.user.name.toUpperCase()
 ```
 
 Lalu suatu hari error muncul:
@@ -39,18 +36,16 @@ Di JavaScript, semua ini baru ketahuan saat runtime. Kadang ketahuan pas QA, kad
 
 Dengan TypeScript, kamu dipaksa mendefinisikan kontrak data, minimal untuk bagian yang kamu pakai.
 
-```
-
+```ts
 type ApiResponse = {
   user?: {
-	name?: string
+    name?: string
   }
 }
 
 function getUpperName(data: ApiResponse) {
   return data.user?.name?.toUpperCase() ?? "(tanpa nama)"
 }
-
 ```
 
 Kuncinya bukan sekadar “pakai optional chaining”. Yang paling berasa adalah: **kamu jadi sadar di awal** kalau `user` atau `name` mungkin tidak ada.
@@ -65,14 +60,10 @@ Ini kebiasaan klasik di banyak codebase JavaScript: ID, status, role, bahkan tip
 
 Contoh sederhana:
 
-```
-
+```js
 if (status === "active") {
-
-// ...
-
+  // ...
 }
-
 ```
 
 Tiba-tiba ada yang kirim `"Active"` atau `"activated"` atau `"ACTIVE"`. Lalu bug kecil muncul di area yang sebenarnya tidak menarik, tapi menyita waktu debugging.
@@ -81,26 +72,20 @@ Tiba-tiba ada yang kirim `"Active"` atau `"activated"` atau `"ACTIVE"`. Lalu bug
 
 TypeScript memberi cara yang elegan untuk bikin himpunan nilai yang valid, tanpa ribet:
 
-```
-
+```ts
 type Status = "active" | "inactive" | "pending"
 
 function canLogin(status: Status) {
-
-return status === "active"
-
+  return status === "active"
 }
-
 ```
 
 Sekarang kalau ada yang nulis `status = "activated"`, editor langsung protes.
 
 Untuk kasus yang lebih kompleks, saya biasanya suka pakai `enum` (kadang), tapi lebih sering pakai union string karena ringan:
 
-```
-
+```ts
 type Role = "admin" | "editor" | "viewer"
-
 ```
 
 Hal-hal semacam ini mungkin terasa sepele, tapi di proyek yang sudah punya banyak fitur, menjaga nilai-nilai kecil tetap konsisten itu efeknya besar.
@@ -113,14 +98,10 @@ Di JavaScript, kita sering bikin fungsi yang fleksibel. Masalahnya, fleksibel ka
 
 Misalnya ada helper:
 
-```
-
+```js
 function formatPrice(value) {
-
-return value.toFixed(2)
-
+  return value.toFixed(2)
 }
-
 ```
 
 Kamu kira `value` selalu number, tapi ternyata ada input string `"10000"`, atau `null`, atau `undefined`. Lalu error runtime muncul di tempat yang tidak kamu duga.
@@ -131,28 +112,19 @@ Kalau kamu beruntung, error muncul di development. Kalau tidak, muncul di produc
 
 TypeScript memaksa kamu memilih: parameter ini sebenarnya apa?
 
-```
-
+```ts
 function formatPrice(value: number) {
-
-return value.toFixed(2)
-
+  return value.toFixed(2)
 }
-
 ```
 
 Kalau memang inputnya bisa lebih dari satu tipe, TypeScript juga memaksa kamu menangani cabangnya:
 
-```
-
+```ts
 function formatPrice(value: number | string) {
-
-const numeric = typeof value === "string" ? Number(value) : value
-
-return numeric.toFixed(2)
-
+  const numeric = typeof value === "string" ? Number(value) : value
+  return numeric.toFixed(2)
 }
-
 ```
 
 Saya suka menyebut ini efek “memaksa berpikir”. Kadang kita tidak suka dipaksa. Tapi banyak bug yang hilang justru karena kita dipaksa menuliskan asumsi secara eksplisit.
@@ -176,34 +148,22 @@ Masalahnya: **tidak semua tempat pemakaian gampang terlihat**, apalagi kalau ada
 
 TypeScript membuat refactor lebih “terlihat” dampaknya. Contoh gampang:
 
-```
-
+```ts
 type User = {
-
-id: string
-
-name: string
-
-email: string
-
+  id: string
+  name: string
+  email: string
 }
-
 ```
 
 Kamu ubah `email` jadi optional:
 
-```
-
+```ts
 type User = {
-
-id: string
-
-name: string
-
-email?: string
-
+  id: string
+  name: string
+  email?: string
 }
-
 ```
 
 Di JavaScript, perubahan ini mungkin diam-diam jadi bug di banyak tempat. Di TypeScript, compiler akan langsung menandai bagian-bagian yang masih menganggap `email` pasti ada.
@@ -228,28 +188,18 @@ Di JavaScript, semua ini bisa lolos tanpa protes.
 
 TypeScript membantu dengan cara yang sederhana: helper punya tipe output yang jelas.
 
-```
-
+```ts
 type NormalizedUser = {
-
-id: string
-
-name: string
-
+  id: string
+  name: string
 }
 
 function normalizeUser(input: any): NormalizedUser {
-
-return {
-
-id: String(input.user_id),
-
-name: String(input.full_name),
-
+  return {
+    id: String(input.user_id),
+    name: String(input.full_name),
+  }
 }
-
-}
-
 ```
 
 Begitu kamu punya tipe `NormalizedUser`, pemanggil fungsi akan mengikuti itu. Kalau pemanggil mencoba akses `userId`, editor langsung kasih sinyal.
@@ -291,4 +241,3 @@ Kalau kamu sudah lama jadi programmer JavaScript, kemungkinan besar kamu sudah �
 TypeScript tidak akan menghilangkan semua bug. Tapi lima kesalahan yang saya tulis di atas adalah jenis kesalahan yang paling sering bikin saya buang waktu, dan setelah pindah ke TypeScript, frekuensinya turun drastis.
 
 Kalau kamu penasaran, coba saja di satu area kecil dulu. Biasanya setelah satu-dua refactor yang terasa lebih aman, kamu akan paham kenapa banyak developer akhirnya betah.
-```
